@@ -63,6 +63,8 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 shadow_size = 6
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wfaru"]
+
 [node name="Computer" type="Node2D" unique_id=669234547]
 script = ExtResource("1_jr5mb")
 
@@ -193,10 +195,15 @@ offset_right = -22.0
 offset_bottom = -9.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wfaru")
 
 [node name="System time" type="Label" parent="Ui/Clock" unique_id=332089377]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_wy26k")
+theme_override_font_sizes/font_size = 12
+text = "example"
 horizontal_alignment = 1
+vertical_alignment = 2
 script = ExtResource("6_k1uhn")
 
 [node name="OpenWindows" type="CanvasLayer" parent="." unique_id=1692935591]
