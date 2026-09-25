@@ -1,13 +1,18 @@
 extends Label
 
 func _process(_delta: float) -> void:
-	# 1. Get the current system time dictionary from the computer
 	var time_dict = Time.get_time_dict_from_system()
-	
-	# 2. Extract hours, minutes, and seconds
-	var hour = time_dict.hour
-	var minute = time_dict.minute
-	var second = time_dict.second
-	
-	# 3. Format the text to always display 2 digits (e.g., "05:09:01")
-	text = "%02d:%02d:%02d" % [hour, minute, second]
+
+	var hour: int = time_dict.hour
+	var minute: int = time_dict.minute
+	var second: int = time_dict.second
+
+	var period := "AM"
+	if hour >= 12:
+		period = "PM"
+
+	var display_hour := hour % 12
+	if display_hour == 0:
+		display_hour = 12
+
+	text = "%02d:%02d:%02d %s" % [display_hour, minute, second, period]
