@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b6h7ednl5viqv" path="res://Scripts/Wallpaper/WallpaperController.gd" id="4_wallpaper"]
 [ext_resource type="FontFile" uid="uid://djv2vutx2s8ke" path="res://Assets/Fonts/drippy-space/DrippySpace-Regular.ttf" id="4_wy26k"]
 [ext_resource type="Theme" uid="uid://c73pshjlt7k1p" path="res://Themes/StartMenuTheme.tres" id="5_k1uhn"]
+[ext_resource type="Theme" uid="uid://oic4u1jlkodl" path="res://Clock.tres" id="6_iiass"]
 [ext_resource type="Script" uid="uid://bww61tqgdw6lw" path="res://system_time.gd" id="6_k1uhn"]
 [ext_resource type="Script" uid="uid://pxpfiopge1fc" path="res://desktop_manager.gd" id="8_gxngq"]
 
@@ -205,8 +206,31 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_wfaru")
 
-[node name="System time" type="Label" parent="Ui/Clock" unique_id=332089377]
+[node name="OptionButton" type="MenuButton" parent="Ui/Clock" unique_id=662600425]
 layout_mode = 2
+item_count = 1
+popup/item_0/id = 0
+
+[node name="System time" type="Label" parent="Ui/Clock/OptionButton" unique_id=332089377]
+visible = false
+layout_mode = 0
+offset_top = 5.0
+offset_right = 74.0
+offset_bottom = 17.0
+theme = ExtResource("6_iiass")
+theme_override_fonts/font = ExtResource("4_wy26k")
+theme_override_font_sizes/font_size = 12
+text = "example"
+horizontal_alignment = 1
+vertical_alignment = 2
+script = ExtResource("6_k1uhn")
+
+[node name="System time2" type="Label" parent="Ui/Clock/OptionButton" unique_id=1807110870]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 74.0
+offset_bottom = 17.0
+theme = ExtResource("6_iiass")
 theme_override_fonts/font = ExtResource("4_wy26k")
 theme_override_font_sizes/font_size = 12
 text = "example"
