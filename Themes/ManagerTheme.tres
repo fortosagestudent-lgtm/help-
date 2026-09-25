@@ -1,0 +1,101 @@
+[gd_resource type="Theme" format=3 uid="uid://dgkek8r7d2f6h"]
+
+[ext_resource type="FontFile" uid="uid://c63xp01ijc0dy" path="res://Assets/Fonts/momo-trust-display/MomoTrustDisplay-Regular.ttf" id="1_font"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/UI/2X/ButtonLight_Minimize_Idle.png" id="2_Minimize_Idle"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/UI/2X/ButtonLight_Minimize_Pressed.png" id="3_Minimize_Pressed"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/UI/2X/ButtonLight_Fullscreen_Idle.png" id="4_Fullscreen_Idle"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/UI/2X/ButtonLight_Fullscreen_Pressed.png" id="5_Fullscreen_Pressed"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/UI/2X/ButtonLight_Exit_Idle.png" id="6_Exit_Idle"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/UI/2X/ButtonLight_Exit_Pressed.png" id="7_Exit_Pressed"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_manager_button_hover"]
+bg_color = Color(0.22, 0.3, 0.46, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.55, 0.68, 0.9, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_manager_button"]
+bg_color = Color(0.12, 0.16, 0.24, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.38, 0.48, 0.68, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_manager_button_pressed"]
+bg_color = Color(0.08, 0.11, 0.18, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.42, 0.54, 0.76, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_manager_panel"]
+bg_color = Color(0.08, 0.1, 0.16, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.45, 0.55, 0.75, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_Minimize_Idle"]
+texture = ExtResource("2_Minimize_Idle")
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_Minimize_Pressed"]
+texture = ExtResource("3_Minimize_Pressed")
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_Fullscreen_Idle"]
+texture = ExtResource("4_Fullscreen_Idle")
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_Fullscreen_Pressed"]
+texture = ExtResource("5_Fullscreen_Pressed")
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_Exit_Idle"]
+texture = ExtResource("6_Exit_Idle")
+
+[sub_resource type="StyleBoxTexture" id="StyleBox_Exit_Pressed"]
+texture = ExtResource("7_Exit_Pressed")
+
+[resource]
+default_font = ExtResource("1_font")
+ManagerButton/base_type = &"Button"
+ManagerButton/font_sizes/font_size = 18
+ManagerButton/fonts/font = ExtResource("1_font")
+ManagerButton/styles/hover = SubResource("StyleBoxFlat_manager_button_hover")
+ManagerButton/styles/normal = SubResource("StyleBoxFlat_manager_button")
+ManagerButton/styles/pressed = SubResource("StyleBoxFlat_manager_button_pressed")
+ManagerPanel/base_type = &"PanelContainer"
+ManagerPanel/styles/panel = SubResource("StyleBoxFlat_manager_panel")
+ManagerMinButton/base_type = &"Button"
+ManagerMinButton/styles/normal = SubResource("StyleBox_Minimize_Idle")
+ManagerMinButton/styles/hover = SubResource("StyleBox_Minimize_Idle")
+ManagerMinButton/styles/pressed = SubResource("StyleBox_Minimize_Pressed")
+ManagerMinButton/styles/hover_pressed = SubResource("StyleBox_Minimize_Pressed")
+ManagerFullButton/base_type = &"Button"
+ManagerFullButton/styles/normal = SubResource("StyleBox_Fullscreen_Idle")
+ManagerFullButton/styles/hover = SubResource("StyleBox_Fullscreen_Idle")
+ManagerFullButton/styles/pressed = SubResource("StyleBox_Fullscreen_Pressed")
+ManagerFullButton/styles/hover_pressed = SubResource("StyleBox_Fullscreen_Pressed")
+ManagerCloseButton/base_type = &"Button"
+ManagerCloseButton/styles/normal = SubResource("StyleBox_Exit_Idle")
+ManagerCloseButton/styles/hover = SubResource("StyleBox_Exit_Idle")
+ManagerCloseButton/styles/pressed = SubResource("StyleBox_Exit_Pressed")
+ManagerCloseButton/styles/hover_pressed = SubResource("StyleBox_Exit_Pressed")

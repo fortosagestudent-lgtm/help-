@@ -1,0 +1,233 @@
+[gd_scene format=3 uid="uid://bsn5sn5yyycur"]
+
+[ext_resource type="Script" uid="uid://coi431rkxara8" path="res://Scripts/program_editor.gd" id="1_aby1g"]
+[ext_resource type="Texture2D" uid="uid://cmhldh5yyxibr" path="res://Assets/Textures/Card X2/Card X3.png" id="2_6622y"]
+[ext_resource type="Theme" uid="uid://dgkek8r7d2f6h" path="res://Themes/ManagerTheme.tres" id="6_manager_theme"]
+[ext_resource type="Script" uid="uid://drmba7rbdcm56" path="res://Scripts/PanelControls/MinimizeButton.gd" id="7_min"]
+[ext_resource type="Script" uid="uid://c4yet58ew8jml" path="res://Scripts/PanelControls/MaximizeButton.gd" id="8_full"]
+[ext_resource type="Script" uid="uid://q0r0jav622c1" path="res://Scripts/PanelControls/CloseButton.gd" id="9_close"]
+[ext_resource type="Script" path="res://Scripts/PanelControls/ManagerDrag.gd" id="10_drag"]
+
+[node name="ProgramEditor" type="Node2D" unique_id=1682754111]
+script = ExtResource("1_aby1g")
+
+[node name="ManagerDrag" type="Node" parent="."]
+script = ExtResource("10_drag")
+panel_path = NodePath("../EditorUI/PanelContainer")
+resize_handle_path = NodePath("../EditorUI/ResizeHandle")
+
+[node name="EditorUI" type="Control" parent="." unique_id=1475808787]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="EditorUI" unique_id=1102791392]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 281.0
+offset_top = 64.99997
+offset_right = 1281.0
+offset_bottom = 725.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.59920394, 0.59920394)
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerPanel"
+
+[node name="TextureRect" type="NinePatchRect" parent="EditorUI/PanelContainer" unique_id=803686113]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_6622y")
+region_rect = Rect2(24, 32, 345.9422, 320)
+
+[node name="MarginContainer" type="MarginContainer" parent="EditorUI/PanelContainer" unique_id=552021130]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="MainLayout" type="VBoxContainer" parent="EditorUI/PanelContainer/MarginContainer" unique_id=782427668]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="EditorUI/PanelContainer/MarginContainer/MainLayout" unique_id=774164235]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=1009253607]
+layout_mode = 2
+text = "Program:"
+vertical_alignment = 1
+
+[node name="ProgramName" type="LineEdit" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=158135522]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Program 1"
+
+[node name="SaveLocation" type="Label" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=691900189]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Not saved yet"
+text_overrun_behavior = 3
+
+[node name="SaveButton" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=1565867762]
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+text = "Save"
+flat = true
+
+[node name="SaveAsButton" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=767895259]
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+text = "Save As"
+flat = true
+
+[node name="StartButton" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=1721722792]
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+text = "Start"
+flat = true
+
+[node name="StopButton" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=857333912]
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+text = "Stop"
+flat = true
+
+[node name="ProgramManagerButton" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=137400802]
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+text = "Programs"
+flat = true
+
+[node name="RunButton" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=2118026889]
+visible = false
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+
+[node name="Min" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=853142659]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerMinButton"
+script = ExtResource("7_min")
+
+[node name="Full" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=1732077025]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerFullButton"
+script = ExtResource("8_full")
+
+[node name="Close" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Header" unique_id=886323020]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerCloseButton"
+script = ExtResource("9_close")
+
+[node name="EditorBody" type="HBoxContainer" parent="EditorUI/PanelContainer/MarginContainer/MainLayout" unique_id=445083553]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="EditorContent" type="VBoxContainer" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/EditorBody" unique_id=102828902]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="Instructions" type="Label" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/EditorBody/EditorContent" unique_id=1908942496]
+layout_mode = 2
+text = "Choose a component, then place it in the program graph. Connect matching ports to define the automation."
+autowrap_mode = 2
+
+[node name="BuildToolbar" type="HBoxContainer" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/EditorBody/EditorContent" unique_id=753357961]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ComponentSelector" type="OptionButton" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/EditorBody/EditorContent/BuildToolbar" unique_id=171622747]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+item_count = 7
+popup/item_0/text = "Server"
+popup/item_0/id = 0
+popup/item_1/text = "Router"
+popup/item_1/id = 1
+popup/item_2/text = "Power"
+popup/item_2/id = 2
+popup/item_3/text = "CPU"
+popup/item_3/id = 3
+popup/item_4/text = "GPU"
+popup/item_4/id = 4
+popup/item_5/text = "File Selector"
+popup/item_5/id = 5
+popup/item_6/text = "File Uploader"
+popup/item_6/id = 6
+
+[node name="HardwareSelector" type="OptionButton" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/EditorBody/EditorContent/BuildToolbar" unique_id=1395542335]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+item_count = 1
+popup/item_0/text = "Select hardware"
+popup/item_0/id = 0
+
+[node name="BuildComponentButton" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/EditorBody/EditorContent/BuildToolbar" unique_id=1035966052]
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+text = "Add Component"
+
+[node name="HardwareShopButton" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/EditorBody/EditorContent/BuildToolbar" unique_id=1559618435]
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+text = "Hardware"
+
+[node name="ProgramGraph" type="GraphEdit" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/EditorBody/EditorContent" unique_id=694204311]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_vertical = 3
+right_disconnects = true
+minimap_size = Vector2(180, 120)
+
+[node name="Footer" type="HBoxContainer" parent="EditorUI/PanelContainer/MarginContainer/MainLayout" unique_id=1617924939]
+layout_mode = 2
+
+[node name="BuildAreaHint" type="Label" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Footer" unique_id=315943924]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Drag between matching ports to connect components."
+
+[node name="ClearButton" type="Button" parent="EditorUI/PanelContainer/MarginContainer/MainLayout/Footer" unique_id=1186409560]
+layout_mode = 2
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+text = "Clear Graph"
+
+[node name="ResizeHandle" type="Button" parent="EditorUI" unique_id=1675236170]
+z_index = 10
+custom_minimum_size = Vector2(80, 28)
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 28.0
+tooltip_text = "Drag to resize the window"
+theme = ExtResource("6_manager_theme")
+theme_type_variation = &"ManagerButton"
+text = "Resize ↘"

@@ -1,0 +1,106 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/Wallpaper/SystemSettings.gd" id="1_settings"]
+[ext_resource type="Theme" path="res://Themes/ManagerTheme.tres" id="2_manager_theme"]
+[ext_resource type="Script" path="res://Scripts/PanelControls/MinimizeButton.gd" id="3_min"]
+[ext_resource type="Script" path="res://Scripts/PanelControls/MaximizeButton.gd" id="4_full"]
+[ext_resource type="Script" path="res://Scripts/PanelControls/CloseButton.gd" id="5_close"]
+[ext_resource type="Script" path="res://Scripts/PanelControls/ManagerDrag.gd" id="6_drag"]
+
+[node name="SystemSettings" type="PanelContainer"]
+theme = ExtResource("2_manager_theme")
+theme_type_variation = &"ManagerPanel"
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -408.0
+offset_top = -300.0
+offset_right = 408.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_settings")
+
+[node name="ManagerDrag" type="Node" parent="."]
+script = ExtResource("6_drag")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Margin/VBox/Header"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "System Settings"
+
+[node name="Spacer" type="Control" parent="Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Min" type="Button" parent="Margin/VBox/Header"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_type_variation = &"ManagerMinButton"
+script = ExtResource("3_min")
+
+[node name="Full" type="Button" parent="Margin/VBox/Header"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_type_variation = &"ManagerFullButton"
+script = ExtResource("4_full")
+
+[node name="Close" type="Button" parent="Margin/VBox/Header"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_type_variation = &"ManagerCloseButton"
+script = ExtResource("5_close")
+
+[node name="Separator" type="HSeparator" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="SectionTitle" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+text = "Wallpaper"
+
+[node name="CurrentWallpaper" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+text = "Current:"
+
+[node name="Actions" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="ImportButton" type="Button" parent="Margin/VBox/Actions"]
+layout_mode = 2
+theme_type_variation = &"ManagerButton"
+text = "Choose image from computer..."
+
+[node name="Wallpapers" type="ScrollContainer" parent="Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="WallpaperGrid" type="GridContainer" parent="Margin/VBox/Wallpapers"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Choose Wallpaper"
+size = Vector2i(800, 560)
+ok_button_text = "Use Image"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.webp ; Image files")

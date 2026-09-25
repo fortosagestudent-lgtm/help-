@@ -1,0 +1,189 @@
+[gd_scene format=3 uid="uid://tl53d8d5lgte"]
+
+[ext_resource type="Script" uid="uid://cy51j0tdaimky" path="res://Scripts/Computer.gd" id="1_jr5mb"]
+[ext_resource type="Script" uid="uid://bdgmrb1d4gked" path="res://Scripts/taskbar.gd" id="2_jr5mb"]
+[ext_resource type="Script" uid="uid://b5tp47a0dg8je" path="res://Scripts/WindowManager.gd" id="3_4xfga"]
+[ext_resource type="Script" uid="uid://b6h7ednl5viqv" path="res://Scripts/Wallpaper/WallpaperController.gd" id="4_wallpaper"]
+[ext_resource type="FontFile" uid="uid://djv2vutx2s8ke" path="res://Assets/Fonts/drippy-space/DrippySpace-Regular.ttf" id="4_wy26k"]
+[ext_resource type="Theme" uid="uid://c73pshjlt7k1p" path="res://Themes/StartMenuTheme.tres" id="5_k1uhn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl62k"]
+bg_color = Color(0.26666668, 0.41960785, 0.7019608, 0.69411767)
+border_width_left = 4
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0.58431375)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7oi2"]
+bg_color = Color(0.13333334, 0.7254902, 0, 0.84313726)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.04116427, 0.34352058, 1.4439226e-07, 0.84313726)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1vod"]
+bg_color = Color(0.16244593, 0.8461297, 1.540184e-06, 0.84313726)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.04116427, 0.34352058, 1.4439226e-07, 0.84313726)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7rrbn"]
+bg_color = Color(0.04116427, 0.34352058, 1.4439226e-07, 0.84313726)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.13333334, 0.7254902, 0, 0.84313726)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 6
+
+[node name="World" type="Node2D" unique_id=669234547]
+script = ExtResource("1_jr5mb")
+
+[node name="Ui" type="CanvasLayer" parent="." unique_id=866133832]
+
+[node name="Wallpaper" type="TextureRect" parent="Ui" unique_id=527989137]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+script = ExtResource("4_wallpaper")
+
+[node name="TopLeft" type="PanelContainer" parent="Ui" unique_id=1561616565]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Ui/TopLeft" unique_id=987687810]
+layout_mode = 2
+
+[node name="MoneyCounter" type="Label" parent="Ui/TopLeft/VBoxContainer" unique_id=455320939]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Money:"
+
+[node name="MoneyMessageTimer" type="Timer" parent="Ui/TopLeft/VBoxContainer/MoneyCounter" unique_id=1478972934]
+one_shot = true
+
+[node name="ExpCounter" type="Label" parent="Ui/TopLeft/VBoxContainer" unique_id=1050032447]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ExpMessageCounter" type="Timer" parent="Ui/TopLeft/VBoxContainer/ExpCounter" unique_id=664942784]
+one_shot = true
+
+[node name="Button" type="Button" parent="Ui/TopLeft/VBoxContainer" unique_id=777168923]
+layout_mode = 2
+text = "Cost 300"
+
+[node name="Taskbar_texture" type="Panel" parent="Ui" unique_id=558007992]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kl62k")
+
+[node name="Taskbar" type="PanelContainer" parent="Ui" unique_id=1517889074]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+script = ExtResource("2_jr5mb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Ui/Taskbar" unique_id=1000942248]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="Ui/Taskbar/HBoxContainer" unique_id=2105653730]
+custom_minimum_size = Vector2(114, 38)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_wy26k")
+theme_override_styles/normal = SubResource("StyleBoxFlat_o7oi2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a1vod")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7rrbn")
+text = "START"
+icon_alignment = 1
+
+[node name="StartMenu" type="PanelContainer" parent="Ui/Taskbar/HBoxContainer/StartButton" unique_id=1302894020]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 150)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -51.0
+offset_top = -197.0
+offset_right = 169.0
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("5_k1uhn")
+theme_type_variation = &"StartMenuPanel"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Ui/Taskbar/HBoxContainer/StartButton/StartMenu" unique_id=2140562442]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SystemManager_Start" type="Button" parent="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer" unique_id=262427105]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("5_k1uhn")
+theme_type_variation = &"StartMenuButton"
+text = "System"
+
+[node name="ProgramManager_Start" type="Button" parent="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer" unique_id=283362053]
+layout_mode = 2
+theme = ExtResource("5_k1uhn")
+theme_type_variation = &"StartMenuButton"
+text = "Program Manager"
+
+[node name="SystemSettings_Start" type="Button" parent="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer" unique_id=358723528]
+layout_mode = 2
+theme = ExtResource("5_k1uhn")
+theme_type_variation = &"StartMenuButton"
+text = "System Settings"
+
+[node name="OpenWindows" type="CanvasLayer" parent="." unique_id=1692935591]
+unique_name_in_owner = true
+script = ExtResource("3_4xfga")
+
+[connection signal="timeout" from="Ui/TopLeft/VBoxContainer/MoneyCounter/MoneyMessageTimer" to="." method="_on_money_message_timer_timeout"]
+[connection signal="timeout" from="Ui/TopLeft/VBoxContainer/ExpCounter/ExpMessageCounter" to="." method="_on_exp_message_counter_timeout"]
+[connection signal="pressed" from="Ui/TopLeft/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Ui/Taskbar/HBoxContainer/StartButton" to="Ui/Taskbar" method="_on_start_button_pressed"]
+[connection signal="pressed" from="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer/SystemManager_Start" to="Ui/Taskbar" method="_on_system_manager_start_pressed"]
+[connection signal="pressed" from="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer/ProgramManager_Start" to="Ui/Taskbar" method="_on_program_manager_pressed"]
+[connection signal="pressed" from="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer/SystemSettings_Start" to="Ui/Taskbar" method="_on_system_settings_pressed"]
