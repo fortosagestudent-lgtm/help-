@@ -1,6 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://c73pshjlt7k1p"]
 
 [ext_resource type="FontFile" uid="uid://c63xp01ijc0dy" path="res://Assets/Fonts/momo-trust-display/MomoTrustDisplay-Regular.ttf" id="1_e6kym"]
+[ext_resource type="FontFile" uid="uid://djv2vutx2s8ke" path="res://Assets/Fonts/drippy-space/DrippySpace-Regular.ttf" id="1_wgdpl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
 bg_color = Color(0.22, 0.3, 0.46, 1)
@@ -54,7 +55,7 @@ corner_radius_bottom_left = 6
 default_font = ExtResource("1_e6kym")
 StartMenuButton/base_type = &"Button"
 StartMenuButton/font_sizes/font_size = 20
-StartMenuButton/fonts/font = ExtResource("1_e6kym")
+StartMenuButton/fonts/font = ExtResource("1_wgdpl")
 StartMenuButton/styles/hover = SubResource("StyleBoxFlat_button_hover")
 StartMenuButton/styles/normal = SubResource("StyleBoxFlat_button_normal")
 StartMenuButton/styles/pressed = SubResource("StyleBoxFlat_button_pressed")

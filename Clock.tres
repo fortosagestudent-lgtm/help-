@@ -1,3 +1,12 @@
 [gd_resource type="Theme" format=3 uid="uid://oic4u1jlkodl"]
 
+[ext_resource type="FontFile" uid="uid://djv2vutx2s8ke" path="res://Assets/Fonts/drippy-space/DrippySpace-Regular.ttf" id="1_gwnb7"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_pgtsp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iiass"]
+
 [resource]
+Label/fonts/font = ExtResource("1_gwnb7")
+Label/styles/focus = SubResource("StyleBoxLine_pgtsp")
+Label/styles/normal = SubResource("StyleBoxEmpty_iiass")
