@@ -15,4 +15,4 @@ func _process(_delta: float) -> void:
 	if display_hour == 0:
 		display_hour = 12
 
-	text = "%02d:%02d:%02d %s" % [display_hour, minute, second, period]
+	text = "%d:%02d:%02d %s" % [display_hour, minute, second, period]
