@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b6h7ednl5viqv" path="res://Scripts/Wallpaper/WallpaperController.gd" id="4_wallpaper"]
 [ext_resource type="FontFile" uid="uid://djv2vutx2s8ke" path="res://Assets/Fonts/drippy-space/DrippySpace-Regular.ttf" id="4_wy26k"]
 [ext_resource type="Theme" uid="uid://c73pshjlt7k1p" path="res://Themes/StartMenuTheme.tres" id="5_k1uhn"]
+[ext_resource type="Script" uid="uid://bww61tqgdw6lw" path="res://system_time.gd" id="6_k1uhn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl62k"]
 bg_color = Color(0.26666668, 0.41960785, 0.7019608, 0.69411767)
@@ -71,6 +72,8 @@ script = ExtResource("1_jr5mb")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 6
@@ -137,6 +140,7 @@ icon_alignment = 1
 
 [node name="StartMenu" type="PanelContainer" parent="Ui/Taskbar/HBoxContainer/StartButton" unique_id=1302894020]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(220, 150)
 layout_mode = 1
 anchors_preset = 7
@@ -175,6 +179,24 @@ layout_mode = 2
 theme = ExtResource("5_k1uhn")
 theme_type_variation = &"StartMenuButton"
 text = "System Settings"
+
+[node name="Clock" type="PanelContainer" parent="Ui" unique_id=841254857]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -32.0
+offset_right = -22.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="System time" type="Label" parent="Ui/Clock" unique_id=332089377]
+layout_mode = 2
+horizontal_alignment = 1
+script = ExtResource("6_k1uhn")
 
 [node name="OpenWindows" type="CanvasLayer" parent="." unique_id=1692935591]
 unique_name_in_owner = true
