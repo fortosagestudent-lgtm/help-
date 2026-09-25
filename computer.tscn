@@ -177,13 +177,6 @@ theme_type_variation = &"StartMenuPanel"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SystemManager_Start" type="Button" parent="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer" unique_id=262427105]
-unique_name_in_owner = true
-layout_mode = 2
-theme = ExtResource("5_k1uhn")
-theme_type_variation = &"StartMenuButton"
-text = "System"
-
 [node name="ProgramManager_Start" type="Button" parent="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer" unique_id=283362053]
 layout_mode = 2
 theme = ExtResource("5_k1uhn")
@@ -238,6 +231,6 @@ script = ExtResource("8_gxngq")
 [connection signal="timeout" from="Ui/TopLeft/VBoxContainer/ExpCounter/ExpMessageCounter" to="." method="_on_exp_message_counter_timeout"]
 [connection signal="pressed" from="Ui/TopLeft/VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Ui/Taskbar/HBoxContainer/StartButton" to="Ui/Taskbar" method="_on_start_button_pressed"]
-[connection signal="pressed" from="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer/SystemManager_Start" to="Ui/Taskbar" method="_on_system_manager_start_pressed"]
 [connection signal="pressed" from="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer/ProgramManager_Start" to="Ui/Taskbar" method="_on_program_manager_pressed"]
 [connection signal="pressed" from="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer/SystemSettings_Start" to="Ui/Taskbar" method="_on_system_settings_pressed"]
+[connection signal="pressed" from="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer/FileManager_Start" to="Ui/Taskbar" method="_on_file_manager_start_pressed"]

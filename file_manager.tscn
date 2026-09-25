@@ -5,12 +5,38 @@
 [ext_resource type="Script" uid="uid://drmba7rbdcm56" path="res://Scripts/PanelControls/MinimizeButton.gd" id="3_p6frx"]
 [ext_resource type="Script" uid="uid://c4yet58ew8jml" path="res://Scripts/PanelControls/MaximizeButton.gd" id="4_01xqt"]
 [ext_resource type="Script" uid="uid://q0r0jav622c1" path="res://Scripts/PanelControls/CloseButton.gd" id="5_8dldt"]
+[ext_resource type="Texture2D" uid="uid://n7r7s8osfvky" path="res://Assets/Textures/Icons/2X/Icon_File.png" id="6_wmegm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl62k"]
+bg_color = Color(0.6, 0.6, 0.6, 0.33333334)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iey8u"]
+bg_color = Color(0.7607843, 0.7607843, 0.7607843, 0.7372549)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vtr5s"]
+bg_color = Color(0.6, 0.6, 0.6, 0.78431374)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
 
 [node name="FileManager" type="Control" unique_id=482633995]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 128.0
+offset_top = 53.0
+offset_right = 128.0
+offset_bottom = 53.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_uchkm")
@@ -45,26 +71,37 @@ layout_mode = 2
 layout_mode = 2
 text = "File Manager"
 
-[node name="Min" type="Button" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Header" unique_id=744794815]
+[node name="HBoxContainer" type="PanelContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Header" unique_id=558869434]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Header/HBoxContainer" unique_id=1080926816]
+layout_mode = 2
+layout_direction = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Header/HBoxContainer/MarginContainer" unique_id=866846502]
+layout_mode = 2
+
+[node name="Close" type="Button" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Header/HBoxContainer/MarginContainer/HBoxContainer" unique_id=2137010062]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme = ExtResource("2_wmegm")
-theme_type_variation = &"ManagerMinButton"
-script = ExtResource("3_p6frx")
+theme_type_variation = &"ManagerCloseButton"
+script = ExtResource("5_8dldt")
 
-[node name="Full" type="Button" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Header" unique_id=1387005393]
+[node name="Full" type="Button" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Header/HBoxContainer/MarginContainer/HBoxContainer" unique_id=1387005393]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme = ExtResource("2_wmegm")
 theme_type_variation = &"ManagerFullButton"
 script = ExtResource("4_01xqt")
 
-[node name="Close" type="Button" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Header" unique_id=2137010062]
+[node name="Min" type="Button" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Header/HBoxContainer/MarginContainer/HBoxContainer" unique_id=744794815]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme = ExtResource("2_wmegm")
-theme_type_variation = &"ManagerCloseButton"
-script = ExtResource("5_8dldt")
+theme_type_variation = &"ManagerMinButton"
+script = ExtResource("3_p6frx")
 
 [node name="Find" type="HBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=125765358]
 layout_mode = 2
@@ -78,86 +115,90 @@ placeholder_text = "Path:"
 layout_mode = 2
 text = "Find"
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=1165776538]
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1165776538]
 layout_mode = 2
 
-[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2106397929]
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2" unique_id=2106397929]
 layout_mode = 2
 split_offsets = PackedInt32Array(142, 196)
 split_offset = 142
 
-[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer" unique_id=1731184086]
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer" unique_id=1731184086]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer3" unique_id=1959139057]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer3" unique_id=1959139057]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer3/VBoxContainer" unique_id=90839997]
+[node name="Header" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer3/VBoxContainer" unique_id=90839997]
 layout_mode = 2
-text = "Test111111"
+text = "Header"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer3/VBoxContainer" unique_id=571598168]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer3/VBoxContainer/ScrollContainer" unique_id=138158445]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer3/VBoxContainer" unique_id=571598168]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer3/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1880751989]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer3/VBoxContainer/ScrollContainer" unique_id=138158445]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer3/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1880751989]
 layout_mode = 2
 text = "Test1                           "
 
-[node name="Label2" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer3/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=297204668]
+[node name="Label2" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer3/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=297204668]
 layout_mode = 2
 text = "Test1               "
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer" unique_id=1653989648]
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer" unique_id=1653989648]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer2" unique_id=336653526]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer2" unique_id=336653526]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=287424542]
-layout_mode = 2
-text = "Test2"
-
-[node name="Label2" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=2091658209]
+[node name="Label" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=287424542]
 layout_mode = 2
 text = "Test2"
 
-[node name="Label3" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=660025603]
+[node name="Label2" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=2091658209]
 layout_mode = 2
 text = "Test2"
 
-[node name="Label4" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=1877160241]
+[node name="Label3" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=660025603]
 layout_mode = 2
 text = "Test2"
 
-[node name="Label5" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=275145670]
+[node name="Label4" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=1877160241]
+layout_mode = 2
+text = "Test2"
+
+[node name="Label5" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer2/VBoxContainer" unique_id=275145670]
 layout_mode = 2
 text = "Test2                             "
 
-[node name="MarginContainer4" type="MarginContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer" unique_id=2041475228]
+[node name="MarginContainer4" type="MarginContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer" unique_id=2041475228]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer4" unique_id=1092837598]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer4" unique_id=1092837598]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=520088759]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=1718154063]
 layout_mode = 2
-text = "Test2                                                               "
+texture = ExtResource("6_wmegm")
+expand_mode = 4
 
-[node name="Label2" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=1034855440]
+[node name="FileType" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=520088759]
 layout_mode = 2
-text = "Test2"
+text = "File Type"
 
-[node name="Label3" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=274839937]
+[node name="FileLocation" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=1034855440]
 layout_mode = 2
-text = "Test2"
+text = "File Location:"
 
-[node name="Label4" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=736575582]
+[node name="LastModified" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=274839937]
 layout_mode = 2
-text = "Test2"
+text = "Last modified"
 
-[node name="Label5" type="Label" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=870324103]
+[node name="Properties" type="Button" parent="PanelContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/HSplitContainer/MarginContainer4/VBoxContainer" unique_id=1155446801]
 layout_mode = 2
-text = "Test2"
+theme_override_styles/normal = SubResource("StyleBoxFlat_kl62k")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iey8u")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vtr5s")
+text = "Properties"

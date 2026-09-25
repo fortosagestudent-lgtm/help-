@@ -1,15 +1,18 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://c2yaoc08huplk"]
 
-[ext_resource type="Script" path="res://Scripts/Wallpaper/SystemSettings.gd" id="1_settings"]
-[ext_resource type="Theme" path="res://Themes/ManagerTheme.tres" id="2_manager_theme"]
-[ext_resource type="Script" path="res://Scripts/PanelControls/MinimizeButton.gd" id="3_min"]
-[ext_resource type="Script" path="res://Scripts/PanelControls/MaximizeButton.gd" id="4_full"]
-[ext_resource type="Script" path="res://Scripts/PanelControls/CloseButton.gd" id="5_close"]
-[ext_resource type="Script" path="res://Scripts/PanelControls/ManagerDrag.gd" id="6_drag"]
+[ext_resource type="Script" uid="uid://dj1ky78p3o051" path="res://Scripts/Wallpaper/SystemSettings.gd" id="1_settings"]
+[ext_resource type="Theme" uid="uid://dgkek8r7d2f6h" path="res://Themes/ManagerTheme.tres" id="2_manager_theme"]
+[ext_resource type="Script" uid="uid://drmba7rbdcm56" path="res://Scripts/PanelControls/MinimizeButton.gd" id="3_min"]
+[ext_resource type="Script" uid="uid://c4yet58ew8jml" path="res://Scripts/PanelControls/MaximizeButton.gd" id="4_full"]
+[ext_resource type="Script" uid="uid://q0r0jav622c1" path="res://Scripts/PanelControls/CloseButton.gd" id="5_close"]
+[ext_resource type="Script" uid="uid://1mj0362xg7q2" path="res://Scripts/PanelControls/ManagerDrag.gd" id="6_drag"]
 
-[node name="SystemSettings" type="PanelContainer"]
-theme = ExtResource("2_manager_theme")
-theme_type_variation = &"ManagerPanel"
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acg1i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ks6d"]
+
+[node name="SystemSettings" type="PanelContainer" unique_id=617699007]
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -20,85 +23,196 @@ offset_right = 408.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_manager_theme")
+theme_type_variation = &"ManagerPanel"
 script = ExtResource("1_settings")
 
-[node name="ManagerDrag" type="Node" parent="."]
+[node name="ManagerDrag" type="Node" parent="." unique_id=1829631569]
 script = ExtResource("6_drag")
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="TabContainer" type="TabContainer" parent="." unique_id=1288486421]
+layout_mode = 2
+current_tab = 1
+
+[node name="Display" type="MarginContainer" parent="TabContainer" unique_id=2111728525]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
+metadata/_tab_index = 0
 
-[node name="VBox" type="VBoxContainer" parent="Margin"]
+[node name="VBox" type="VBoxContainer" parent="TabContainer/Display" unique_id=1916766147]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Header" type="HBoxContainer" parent="Margin/VBox"]
+[node name="Header" type="HBoxContainer" parent="TabContainer/Display/VBox" unique_id=248784283]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Margin/VBox/Header"]
+[node name="Display" type="Label" parent="TabContainer/Display/VBox/Header" unique_id=436590023]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "System Settings"
+text = "Display Settings"
 
-[node name="Spacer" type="Control" parent="Margin/VBox/Header"]
+[node name="Spacer" type="Control" parent="TabContainer/Display/VBox/Header" unique_id=256501562]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Min" type="Button" parent="Margin/VBox/Header"]
+[node name="Min" type="Button" parent="TabContainer/Display/VBox/Header" unique_id=1902296879]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme_type_variation = &"ManagerMinButton"
 script = ExtResource("3_min")
 
-[node name="Full" type="Button" parent="Margin/VBox/Header"]
+[node name="Full" type="Button" parent="TabContainer/Display/VBox/Header" unique_id=2140096574]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme_type_variation = &"ManagerFullButton"
 script = ExtResource("4_full")
 
-[node name="Close" type="Button" parent="Margin/VBox/Header"]
+[node name="Close" type="Button" parent="TabContainer/Display/VBox/Header" unique_id=306093953]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 theme_type_variation = &"ManagerCloseButton"
 script = ExtResource("5_close")
 
-[node name="Separator" type="HSeparator" parent="Margin/VBox"]
+[node name="Separator" type="HSeparator" parent="TabContainer/Display/VBox" unique_id=57800356]
 layout_mode = 2
 
-[node name="SectionTitle" type="Label" parent="Margin/VBox"]
+[node name="SectionTitle" type="Label" parent="TabContainer/Display/VBox" unique_id=1911607547]
 layout_mode = 2
 text = "Wallpaper"
 
-[node name="CurrentWallpaper" type="Label" parent="Margin/VBox"]
+[node name="CurrentWallpaper" type="Label" parent="TabContainer/Display/VBox" unique_id=1796060585]
 layout_mode = 2
 text = "Current:"
 
-[node name="Actions" type="HBoxContainer" parent="Margin/VBox"]
+[node name="Actions" type="HBoxContainer" parent="TabContainer/Display/VBox" unique_id=1880399127]
 layout_mode = 2
 
-[node name="ImportButton" type="Button" parent="Margin/VBox/Actions"]
+[node name="ImportButton" type="Button" parent="TabContainer/Display/VBox/Actions" unique_id=1336419788]
 layout_mode = 2
 theme_type_variation = &"ManagerButton"
 text = "Choose image from computer..."
 
-[node name="Wallpapers" type="ScrollContainer" parent="Margin/VBox"]
+[node name="Wallpapers" type="ScrollContainer" parent="TabContainer/Display/VBox" unique_id=518181726]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="WallpaperGrid" type="GridContainer" parent="Margin/VBox/Wallpapers"]
+[node name="WallpaperGrid" type="GridContainer" parent="TabContainer/Display/VBox/Wallpapers" unique_id=1876028146]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 12
 theme_override_constants/v_separation = 12
 columns = 3
 
-[node name="FileDialog" type="FileDialog" parent="."]
-title = "Choose Wallpaper"
+[node name="Summary" type="MarginContainer" parent="TabContainer" unique_id=951362033]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/Summary" unique_id=1609747457]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_acg1i")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Summary/PanelContainer" unique_id=1402466737]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="TabContainer/Summary/PanelContainer/VBoxContainer" unique_id=755528815]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/Header" unique_id=446289443]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "System Summary                                                                                                                                  "
+
+[node name="PanelControls" type="PanelContainer" parent="TabContainer/Summary/PanelContainer/VBoxContainer/Header" unique_id=1781023700]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1ks6d")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Summary/PanelContainer/VBoxContainer/Header/PanelControls" unique_id=498781769]
+layout_mode = 2
+
+[node name="Min" type="Button" parent="TabContainer/Summary/PanelContainer/VBoxContainer/Header/PanelControls/HBoxContainer" unique_id=964429865]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme = ExtResource("2_manager_theme")
+theme_type_variation = &"ManagerMinButton"
+script = ExtResource("3_min")
+
+[node name="Full" type="Button" parent="TabContainer/Summary/PanelContainer/VBoxContainer/Header/PanelControls/HBoxContainer" unique_id=514407157]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme = ExtResource("2_manager_theme")
+theme_type_variation = &"ManagerFullButton"
+script = ExtResource("4_full")
+
+[node name="Close" type="Button" parent="TabContainer/Summary/PanelContainer/VBoxContainer/Header/PanelControls/HBoxContainer" unique_id=2069625030]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme = ExtResource("2_manager_theme")
+theme_type_variation = &"ManagerCloseButton"
+script = ExtResource("5_close")
+
+[node name="TabContainer" type="TabContainer" parent="TabContainer/Summary/PanelContainer/VBoxContainer" unique_id=605658023]
+layout_mode = 2
+current_tab = 0
+
+[node name="Summary" type="MarginContainer" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer" unique_id=1948644707]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary" unique_id=1130074971]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=1153248956]
+layout_mode = 2
+text = "System Metrics"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=882076004]
+layout_mode = 2
+
+[node name="NeworkSpeed" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=363236122]
+layout_mode = 2
+text = "Total Network Speed"
+
+[node name="DownloadSpeed" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=1217770923]
+layout_mode = 2
+text = "Current Download Speed:"
+
+[node name="UploadSpeed" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=2036933346]
+layout_mode = 2
+text = "Current Upload Speed:"
+
+[node name="TotalPower" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=492705826]
+layout_mode = 2
+text = "Max Power"
+
+[node name="CurrentPower" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=1062742111]
+layout_mode = 2
+text = "Current Power"
+
+[node name="TotalCpuCore" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=275394120]
+layout_mode = 2
+text = "Total Number of Cpu Cores"
+
+[node name="TotalCpuPower" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=1605994098]
+layout_mode = 2
+text = "Total Cpu Power"
+
+[node name="CurrentCPu" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=2137881407]
+layout_mode = 2
+text = "Current Total Cpu usage"
+
+[node name="CpuPerCore" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=1261421952]
+layout_mode = 2
+text = "Average Cpu Usage per Core:"
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=499793298]
+title = "Open a File"
 size = Vector2i(800, 560)
 ok_button_text = "Use Image"
 file_mode = 0
