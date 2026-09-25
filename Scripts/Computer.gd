@@ -1,6 +1,8 @@
 class_name Computer
 extends Node
-#### Export Variables
+#### Export Variables AHHHHH
+
+
 
 
 @export_group("Network")
