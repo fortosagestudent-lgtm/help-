@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://djv2vutx2s8ke" path="res://Assets/Fonts/drippy-space/DrippySpace-Regular.ttf" id="4_wy26k"]
 [ext_resource type="Theme" uid="uid://c73pshjlt7k1p" path="res://Themes/StartMenuTheme.tres" id="5_k1uhn"]
 [ext_resource type="Script" uid="uid://bww61tqgdw6lw" path="res://system_time.gd" id="6_k1uhn"]
+[ext_resource type="Script" uid="uid://pxpfiopge1fc" path="res://desktop_manager.gd" id="8_gxngq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl62k"]
 bg_color = Color(0.26666668, 0.41960785, 0.7019608, 0.69411767)
@@ -143,7 +144,6 @@ icon_alignment = 1
 
 [node name="StartMenu" type="PanelContainer" parent="Ui/Taskbar/HBoxContainer/StartButton" unique_id=1302894020]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(220, 150)
 layout_mode = 1
 anchors_preset = 7
@@ -183,6 +183,14 @@ theme = ExtResource("5_k1uhn")
 theme_type_variation = &"StartMenuButton"
 text = "System Settings"
 
+[node name="FileManager_Start" type="Button" parent="Ui/Taskbar/HBoxContainer/StartButton/StartMenu/VBoxContainer" unique_id=1347303165]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("5_k1uhn")
+theme_type_variation = &"StartMenuButton"
+text = "File Manager
+"
+
 [node name="Clock" type="PanelContainer" parent="Ui" unique_id=841254857]
 anchors_preset = 3
 anchor_left = 1.0
@@ -209,6 +217,11 @@ script = ExtResource("6_k1uhn")
 [node name="OpenWindows" type="CanvasLayer" parent="." unique_id=1692935591]
 unique_name_in_owner = true
 script = ExtResource("3_4xfga")
+
+[node name="Desktop" type="CanvasLayer" parent="." unique_id=1278740064]
+
+[node name="DesktopManager" type="Node2D" parent="Desktop" unique_id=539500737]
+script = ExtResource("8_gxngq")
 
 [connection signal="timeout" from="Ui/TopLeft/VBoxContainer/MoneyCounter/MoneyMessageTimer" to="." method="_on_money_message_timer_timeout"]
 [connection signal="timeout" from="Ui/TopLeft/VBoxContainer/ExpCounter/ExpMessageCounter" to="." method="_on_exp_message_counter_timeout"]
