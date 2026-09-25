@@ -64,7 +64,7 @@ var gpu_timer: Timer
 var ram_timer: Timer
 
 
-###### Start#####
+###### Start##### Hello Daniel
 func _ready() -> void:
 	power_lvl = maxi(power_lvl, 1)
 	max_power = power_capacity_per_level * float(power_lvl)
