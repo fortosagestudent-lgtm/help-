@@ -54,7 +54,7 @@ corner_radius_bottom_left = 6
 [resource]
 default_font = ExtResource("1_e6kym")
 StartMenuButton/base_type = &"Button"
-StartMenuButton/font_sizes/font_size = 21
+StartMenuButton/font_sizes/font_size = 20
 StartMenuButton/fonts/font = ExtResource("1_wgdpl")
 StartMenuButton/styles/hover = SubResource("StyleBoxFlat_button_hover")
 StartMenuButton/styles/normal = SubResource("StyleBoxFlat_button_normal")
