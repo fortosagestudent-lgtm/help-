@@ -6,12 +6,12 @@
 [ext_resource type="Script" uid="uid://drmba7rbdcm56" path="res://Scripts/PanelControls/MinimizeButton.gd" id="7_min"]
 [ext_resource type="Script" uid="uid://c4yet58ew8jml" path="res://Scripts/PanelControls/MaximizeButton.gd" id="8_full"]
 [ext_resource type="Script" uid="uid://q0r0jav622c1" path="res://Scripts/PanelControls/CloseButton.gd" id="9_close"]
-[ext_resource type="Script" path="res://Scripts/PanelControls/ManagerDrag.gd" id="10_drag"]
+[ext_resource type="Script" uid="uid://1mj0362xg7q2" path="res://Scripts/PanelControls/ManagerDrag.gd" id="10_drag"]
 
 [node name="ProgramEditor" type="Node2D" unique_id=1682754111]
 script = ExtResource("1_aby1g")
 
-[node name="ManagerDrag" type="Node" parent="."]
+[node name="ManagerDrag" type="Node" parent="." unique_id=1428986743]
 script = ExtResource("10_drag")
 panel_path = NodePath("../EditorUI/PanelContainer")
 resize_handle_path = NodePath("../EditorUI/ResizeHandle")
@@ -43,7 +43,6 @@ theme_type_variation = &"ManagerPanel"
 
 [node name="TextureRect" type="NinePatchRect" parent="EditorUI/PanelContainer" unique_id=803686113]
 layout_mode = 2
-mouse_filter = 2
 texture = ExtResource("2_6622y")
 region_rect = Rect2(24, 32, 345.9422, 320)
 

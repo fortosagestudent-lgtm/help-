@@ -16,7 +16,9 @@ func get_input_ports() -> Array[String]:
 func evaluate(_computer: Computer, inputs: Dictionary, delta: float) -> Dictionary:
 	var file_rate := maxf(float(inputs.get("file", 0.0)), 0.0)
 	var upload_rate := maxf(float(inputs.get("upload", 0.0)), 0.0)
-	uploaded_files += minf(file_rate, upload_rate / maxf(upload_per_file, 0.01)) * delta
+	var files_this_second := minf(file_rate, upload_rate / maxf(upload_per_file, 0.01))
+	current_upload_rate = files_this_second * maxf(upload_per_file, 0.01)
+	uploaded_files += files_this_second * delta
 	set_status("Uploaded: %.1f test files" % uploaded_files)
 	return {}
 

@@ -3,9 +3,9 @@ extends PanelContainer
 
 var wallpaper_controller: WallpaperController
 
-@onready var wallpaper_grid: GridContainer = $Margin/VBox/Wallpapers/WallpaperGrid
-@onready var current_label: Label = $Margin/VBox/CurrentWallpaper
-@onready var import_button: Button = $Margin/VBox/Actions/ImportButton
+@onready var wallpaper_grid: GridContainer = %WallpaperGrid
+@onready var current_label: Label = %CurrentWallpaper
+@onready var import_button: Button = %ImportButton
 @onready var file_dialog: FileDialog = $FileDialog
 
 

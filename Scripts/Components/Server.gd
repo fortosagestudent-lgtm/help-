@@ -12,6 +12,6 @@ func get_output_ports() -> Array[String]:
 
 
 func evaluate(computer: Computer, _inputs: Dictionary, _delta: float) -> Dictionary:
-	var rate := computer.network_multi * output_multiplier if computer.is_powered else 0.0
+	var rate := computer.network_multi * output_multiplier if computer.is_network_active() else 0.0
 	set_status("Network: %.1f/s" % rate)
 	return {"network": rate}

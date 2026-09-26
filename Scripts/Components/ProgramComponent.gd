@@ -13,6 +13,12 @@ const PORT_COLORS := {
 }
 
 var status_label: Label
+# Actual consumed bandwidth for the latest evaluation, in units per second.
+# Supplying unused bandwidth from a Server or Router does not count as traffic.
+var current_upload_rate := 0.0
+var current_download_rate := 0.0
+var current_cpu_rate := 0.0
+var current_gpu_rate := 0.0
 
 
 func _ready() -> void:

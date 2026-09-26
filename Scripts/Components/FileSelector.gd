@@ -8,7 +8,7 @@ func get_kind() -> String:
 
 
 func get_input_ports() -> Array[String]:
-	return ["download", "cpu", "gpu"]
+	return ["download"]
 
 
 func get_output_ports() -> Array[String]:
@@ -16,9 +16,12 @@ func get_output_ports() -> Array[String]:
 
 
 func evaluate(_computer: Computer, inputs: Dictionary, _delta: float) -> Dictionary:
-	# Prototype flow: downloaded data becomes test files at the available compute rate.
+	# Downloaded data becomes files without needing CPU or GPU connections.
 	var download := maxf(float(inputs.get("download", 0.0)), 0.0)
-	var compute := maxf(float(inputs.get("cpu", 0.0)), 0.0) + maxf(float(inputs.get("gpu", 0.0)), 0.0)
-	var files := minf(download, compute * processing_multiplier)
+	var multiplier := maxf(processing_multiplier, 0.0)
+	var files := download * multiplier
+	current_download_rate = download if multiplier > 0.0 else 0.0
+	current_cpu_rate = 0.0
+	current_gpu_rate = 0.0
 	set_status("Selected: %.1f files/s" % files)
 	return {"file": files}

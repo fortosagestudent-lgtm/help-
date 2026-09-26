@@ -124,7 +124,16 @@ func start_program() -> void:
 
 func stop_program() -> void:
 	program_timer.stop()
+	if is_instance_valid(computer):
+		computer.clear_network_activity(self)
+		computer.clear_compute_activity(self)
 	status_hint.text = "Stopped."
+
+
+func _exit_tree() -> void:
+	if is_instance_valid(computer):
+		computer.clear_network_activity(self)
+		computer.clear_compute_activity(self)
 
 
 func clear_graph() -> void:
@@ -148,9 +157,20 @@ func _on_program_tick() -> void:
 		if child is ProgramComponent:
 			_evaluate_component(child, cache, visiting)
 	var uploaded := 0.0
+	var upload_rate := 0.0
+	var download_rate := 0.0
+	var cpu_rate := 0.0
+	var gpu_rate := 0.0
 	for child in graph.get_children():
-		if child is ProgramComponent and child.get_kind() == "File Uploader":
-			uploaded += child.uploaded_files
+		if child is ProgramComponent:
+			upload_rate += child.current_upload_rate
+			download_rate += child.current_download_rate
+			cpu_rate += child.current_cpu_rate
+			gpu_rate += child.current_gpu_rate
+			if child.get_kind() == "File Uploader":
+				uploaded += child.uploaded_files
+	computer.report_network_activity(self, upload_rate, download_rate)
+	computer.report_compute_activity(self, cpu_rate, gpu_rate)
 	status_hint.text = "Running — %.1f test files uploaded" % uploaded
 
 
@@ -162,6 +182,10 @@ func _evaluate_component(component: ProgramComponent, cache: Dictionary, visitin
 		status_hint.text = "Connection loop detected. Remove a wire."
 		return {}
 	visiting[component_name] = true
+	component.current_upload_rate = 0.0
+	component.current_download_rate = 0.0
+	component.current_cpu_rate = 0.0
+	component.current_gpu_rate = 0.0
 	var inputs: Dictionary = {}
 	for connection in graph.get_connection_list():
 		if str(connection["to_node"]) != component_name:
@@ -202,10 +226,21 @@ func _load_program_data() -> void:
 		if component != null:
 			component.load_state(entry.get("state", {}))
 	for connection in program_data.get("connections", []):
-		graph.connect_node(
-			StringName(connection.get("from_node", "")), int(connection.get("from_port", 0)),
-			StringName(connection.get("to_node", "")), int(connection.get("to_port", 0))
-		)
+		var from_name := StringName(connection.get("from_node", ""))
+		var to_name := StringName(connection.get("to_node", ""))
+		var from_port := int(connection.get("from_port", 0))
+		var to_port := int(connection.get("to_port", 0))
+		var source := graph.get_node_or_null(NodePath(from_name)) as ProgramComponent
+		var target := graph.get_node_or_null(NodePath(to_name)) as ProgramComponent
+		if source == null or target == null:
+			continue
+		# Older saves can contain the File Selector's removed CPU/GPU inputs.
+		# Keep valid download/file wires and skip ports that no longer exist.
+		if from_port < 0 or from_port >= source.get_output_ports().size():
+			continue
+		if to_port < 0 or to_port >= target.get_input_ports().size():
+			continue
+		graph.connect_node(from_name, from_port, to_name, to_port)
 	status_hint.text = "Loaded %s from this computer." % program_name
 
 

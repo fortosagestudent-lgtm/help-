@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c4yet58ew8jml" path="res://Scripts/PanelControls/MaximizeButton.gd" id="4_full"]
 [ext_resource type="Script" uid="uid://q0r0jav622c1" path="res://Scripts/PanelControls/CloseButton.gd" id="5_close"]
 [ext_resource type="Script" uid="uid://1mj0362xg7q2" path="res://Scripts/PanelControls/ManagerDrag.gd" id="6_drag"]
+[ext_resource type="Script" path="res://Scripts/SystemManager.gd" id="7_summary"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acg1i"]
 
@@ -85,6 +86,7 @@ layout_mode = 2
 text = "Wallpaper"
 
 [node name="CurrentWallpaper" type="Label" parent="TabContainer/Display/VBox" unique_id=1796060585]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Current:"
 
@@ -92,6 +94,7 @@ text = "Current:"
 layout_mode = 2
 
 [node name="ImportButton" type="Button" parent="TabContainer/Display/VBox/Actions" unique_id=1336419788]
+unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"ManagerButton"
 text = "Choose image from computer..."
@@ -102,6 +105,7 @@ size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
 [node name="WallpaperGrid" type="GridContainer" parent="TabContainer/Display/VBox/Wallpapers" unique_id=1876028146]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 12
@@ -110,11 +114,16 @@ columns = 3
 
 [node name="Summary" type="MarginContainer" parent="TabContainer" unique_id=951362033]
 layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 metadata/_tab_index = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="TabContainer/Summary" unique_id=1609747457]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_acg1i")
+script = ExtResource("7_summary")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Summary/PanelContainer" unique_id=1402466737]
 layout_mode = 2
@@ -125,8 +134,9 @@ alignment = 1
 
 [node name="Label" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/Header" unique_id=446289443]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
-text = "System Summary                                                                                                                                  "
+text = "System Summary"
 
 [node name="PanelControls" type="PanelContainer" parent="TabContainer/Summary/PanelContainer/VBoxContainer/Header" unique_id=1781023700]
 layout_mode = 2
@@ -177,7 +187,7 @@ layout_mode = 2
 
 [node name="NeworkSpeed" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=363236122]
 layout_mode = 2
-text = "Total Network Speed"
+text = "Current Network Speed: 0.0/s"
 
 [node name="DownloadSpeed" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=1217770923]
 layout_mode = 2
@@ -205,11 +215,27 @@ text = "Total Cpu Power"
 
 [node name="CurrentCPu" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=2137881407]
 layout_mode = 2
-text = "Current Total Cpu usage"
+text = "Current CPU Usage: 0.0/s"
 
 [node name="CpuPerCore" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer" unique_id=1261421952]
 layout_mode = 2
-text = "Average Cpu Usage per Core:"
+text = "Average Usage per Core: 0.0/s"
+
+[node name="TotalGpuCards" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer"]
+layout_mode = 2
+text = "Total GPU Cards:"
+
+[node name="TotalGpuPower" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer"]
+layout_mode = 2
+text = "GPU Output per Second:"
+
+[node name="CurrentGpu" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer"]
+layout_mode = 2
+text = "Current GPU Usage: 0.0/s"
+
+[node name="GpuPerCard" type="Label" parent="TabContainer/Summary/PanelContainer/VBoxContainer/TabContainer/Summary/VBoxContainer"]
+layout_mode = 2
+text = "Average Usage per Card: 0.0/s"
 
 [node name="FileDialog" type="FileDialog" parent="." unique_id=499793298]
 title = "Open a File"

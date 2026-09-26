@@ -53,6 +53,11 @@ const PROGRAM_EDITOR_SCENE: PackedScene = preload("res://program_editor.tscn")
 var programs: Array[Dictionary] = []
 var upload_speed: float = 0.0
 var download_speed: float = 0.0
+# Each running program owns one traffic report. Rates are replaced each tick,
+# not accumulated, and removed when that program stops or closes.
+var _network_activity: Dictionary = {}
+var _network_running := false
+var _compute_activity: Dictionary = {}
 var cpu_lvl: int = 1
 var cpu_output: float = 0.0
 var gpu_output: float = 0.0
@@ -107,7 +112,7 @@ func create_network_speed() -> bool:
 		print("System is powered off.")
 		return false
 
-	if not network_timer.is_stopped():
+	if _network_running:
 		return true # Already running; don't charge again.
 
 	var cost := get_network_power_cost()
@@ -117,13 +122,22 @@ func create_network_speed() -> bool:
 		return false
 
 	power -= cost # One-time cost to start the network process.
+	_network_running = true
 	network_timer.start()
+	_refresh_network_speed()
 	return true
 	
 func get_network_power_cost() -> float:
 	return maxf(float(router_lvl), 1.0) * power_cost_per_router_level
 	
 func stop_network() -> void:
+	_network_running = false
+	_network_activity.clear()
+	_compute_activity.clear()
+	upload_speed = 0.0
+	download_speed = 0.0
+	cpu_output = 0.0
+	gpu_output = 0.0
 	if network_timer != null:
 		network_timer.stop()
 	if cpu_timer != null:
@@ -139,15 +153,40 @@ var storage_capacity: float:
 
 func _on_network_timer_timeout() -> void:
 	if not is_powered:
+		_network_running = false
 		network_timer.stop()
+	_refresh_network_speed()
+
+
+func is_network_active() -> bool:
+	# Timer time_left can briefly be nonpositive during a slow frame. It is
+	# a sampling clock, so use explicit running state to decide connectivity.
+	return is_powered and _network_running
+
+
+func report_network_activity(source: Node, upload_rate: float, download_rate: float) -> void:
+	_network_activity[source] = Vector2(maxf(upload_rate, 0.0), maxf(download_rate, 0.0))
+	_refresh_network_speed()
+
+
+func clear_network_activity(source: Node) -> void:
+	_network_activity.erase(source)
+	_refresh_network_speed()
+
+
+func _refresh_network_speed() -> void:
+	upload_speed = 0.0
+	download_speed = 0.0
+	if not is_network_active():
+		_network_activity.clear()
 		return
-
-	var rate_per_second := float(router_lvl) * network_multi
-	var amount_this_tick := rate_per_second * network_timer.wait_time
-	upload_speed += amount_this_tick * 0.5
-	download_speed += amount_this_tick * 0.5
-
-	print("Upload: %.1f | Download: %.1f | Total: %.1f | CPU: %.1f | Power: %.1f" % [upload_speed,download_speed,network_speed,cpu_output,power])
+	for source in _network_activity.keys():
+		if not is_instance_valid(source) or source.is_queued_for_deletion() or not source.is_inside_tree():
+			_network_activity.erase(source)
+			continue
+		var rates: Vector2 = _network_activity[source]
+		upload_speed += rates.x
+		download_speed += rates.y
 
 #####CPU#####
 
@@ -173,12 +212,33 @@ func add_cpu_cores(amount: int) -> void:
 func _on_cpu_timer_timeout() -> void:
 	if not is_powered:
 		cpu_timer.stop()
-		return
+	_refresh_compute_usage()
 
-	# Each core produces output, and cpu_lvl scales the output of every core.
-	var output_per_core := cpu_output_per_core * float(cpu_lvl) * cpu_output_per_level
-	cpu_output += output_per_core * float(cpu_cores) * cpu_timer.wait_time
-	print("CPU output: %.1f | CPU level: %d | Cores: %d" % [cpu_output, cpu_lvl, cpu_cores])
+
+func report_compute_activity(source: Node, cpu_rate: float, gpu_rate: float) -> void:
+	_compute_activity[source] = Vector2(maxf(cpu_rate, 0.0), maxf(gpu_rate, 0.0))
+	_refresh_compute_usage()
+
+
+func clear_compute_activity(source: Node) -> void:
+	_compute_activity.erase(source)
+	_refresh_compute_usage()
+
+
+func _refresh_compute_usage() -> void:
+	# These values now describe current work per second, rather than stored output.
+	cpu_output = 0.0
+	gpu_output = 0.0
+	if not is_powered:
+		_compute_activity.clear()
+		return
+	for source in _compute_activity.keys():
+		if not is_instance_valid(source) or source.is_queued_for_deletion() or not source.is_inside_tree():
+			_compute_activity.erase(source)
+			continue
+		var rates: Vector2 = _compute_activity[source]
+		cpu_output += rates.x
+		gpu_output += rates.y
 
 
 
@@ -203,12 +263,7 @@ func add_gpus(amount: int) -> void:
 func _on_gpu_timer_timeout() -> void:
 	if not is_powered:
 		gpu_timer.stop()
-		return
-
-	# GPU level scales the output produced by every installed graphics card.
-	var output_per_card := gpu_output_per_card * float(gpu_lvl) * gpu_output_per_level
-	gpu_output += output_per_card * float(gpu_count) * gpu_timer.wait_time
-	print("GPU output: %.1f | GPU level: %d | Cards: %d" % [gpu_output, gpu_lvl, gpu_count])
+	_refresh_compute_usage()
 
 
 
