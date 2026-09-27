@@ -1,7 +1,19 @@
 class_name Computer
 extends Node
-#### Export Variables AHHHHH
+const WallpaperStorage = preload("res://Scripts/Wallpaper/WallpaperStorage.gd")
+## Owns one computer's hardware, current activity, wallpaper, and in-memory programs.
+## Views read these values; program editors replace their own activity report each tick.
+signal wallpaper_changed(value: Texture2D)
 
+@export_group("Desktop")
+## This computer owns its wallpaper; its desktop view listens for changes.
+@export var wallpaper: Texture2D:
+	set(value):
+		wallpaper = value
+		wallpaper_changed.emit(value)
+## Optional stable save ID for computers spawned or renamed at runtime.
+## Leave empty to use this computer's scene-tree path. Use a different ID per computer.
+@export var wallpaper_save_id := ""
 
 
 
@@ -47,8 +59,7 @@ extends Node
 @export_range(0.1, 100000.0, 0.1) var max_power: float = 100.0
 @export_range(0.0, 100000.0, 0.1) var power: float = 100.0
 
-######Variables####
-const PROGRAM_EDITOR_SCENE: PackedScene = preload("res://program_editor.tscn")
+const PROGRAM_EDITOR_SCENE: PackedScene = preload("res://Scenes/program_editor.tscn")
 
 var programs: Array[Dictionary] = []
 var upload_speed: float = 0.0
@@ -68,8 +79,32 @@ var cpu_timer: Timer
 var gpu_timer: Timer
 var ram_timer: Timer
 
+# Derived values use the current hardware/activity rather than a second stored copy.
+var network_speed: float:
+	get:
+		return upload_speed + download_speed
 
-###### Start##### Hello Daniel
+var storage_capacity: float:
+	get:
+		return float(storage_lvl) * float(storage_drives) * storage_per_drive * storage_per_level
+
+
+func _enter_tree() -> void:
+	# Initialize before child views enter: saved choice, Inspector override, shared default.
+	if wallpaper == null:
+		wallpaper = WorldConstants.default_wallpaper
+	var saved := WallpaperStorage.load_wallpaper(wallpaper_storage_directory())
+	if saved != null:
+		wallpaper = saved
+
+
+func set_wallpaper(value: Texture2D) -> Error:
+	var result := WallpaperStorage.save_wallpaper(wallpaper_storage_directory(), value)
+	if result == OK:
+		wallpaper = value
+	return result
+
+
 func _ready() -> void:
 	power_lvl = maxi(power_lvl, 1)
 	max_power = power_capacity_per_level * float(power_lvl)
@@ -83,30 +118,30 @@ func _ready() -> void:
 	ram_sticks = clampi(ram_sticks, 1, max_ram_sticks)
 	max_storage_drives = maxi(max_storage_drives, 1)
 	storage_drives = clampi(storage_drives, 1, max_storage_drives)
-	_create_network_timer()
-	_create_cpu_timer()
-	_create_gpu_timer()
-	_create_ram_timer()
+	network_timer = _create_resource_timer(network_tick_seconds, _on_network_timer_timeout)
+	cpu_timer = _create_resource_timer(cpu_tick_seconds, _on_cpu_timer_timeout)
+	gpu_timer = _create_resource_timer(gpu_tick_seconds, _on_gpu_timer_timeout)
+	ram_timer = _create_resource_timer(ram_tick_seconds, _on_ram_timer_timeout)
 	create_network_speed()
 	create_cpu_output()
 	create_gpu_output()
 	create_ram_output()
 
 
+func wallpaper_storage_directory() -> String:
+	var identity := wallpaper_save_id if not wallpaper_save_id.is_empty() else str(get_path())
+	return "user://computers/" + identity.sha256_text() + "/wallpaper"
 
-#####Network########
 
-var network_speed: float:
-	get:
-		return upload_speed + download_speed
-		
-func _create_network_timer() -> void:
-	network_timer = Timer.new()
-	network_timer.wait_time = maxf(network_tick_seconds, 0.01)
-	network_timer.one_shot = false
-	network_timer.timeout.connect(_on_network_timer_timeout)
-	add_child(network_timer)
-	
+# Each hardware timer keeps its exported interval; only construction is shared.
+func _create_resource_timer(interval: float, callback: Callable) -> Timer:
+	var resource_timer := Timer.new()
+	resource_timer.wait_time = maxf(interval, 0.01)
+	resource_timer.timeout.connect(callback)
+	add_child(resource_timer)
+	return resource_timer
+
+
 func create_network_speed() -> bool:
 	if not is_powered:
 		print("System is powered off.")
@@ -126,10 +161,12 @@ func create_network_speed() -> bool:
 	network_timer.start()
 	_refresh_network_speed()
 	return true
-	
+
+
 func get_network_power_cost() -> float:
 	return maxf(float(router_lvl), 1.0) * power_cost_per_router_level
-	
+
+## Existing shutdown helper stops all resource timers, not just network sampling.
 func stop_network() -> void:
 	_network_running = false
 	_network_activity.clear()
@@ -147,9 +184,6 @@ func stop_network() -> void:
 	if ram_timer != null:
 		ram_timer.stop()
 
-var storage_capacity: float:
-	get:
-		return float(storage_lvl) * float(storage_drives) * storage_per_drive * storage_per_level
 
 func _on_network_timer_timeout() -> void:
 	if not is_powered:
@@ -180,24 +214,9 @@ func _refresh_network_speed() -> void:
 	if not is_network_active():
 		_network_activity.clear()
 		return
-	for source in _network_activity.keys():
-		if not is_instance_valid(source) or source.is_queued_for_deletion() or not source.is_inside_tree():
-			_network_activity.erase(source)
-			continue
-		var rates: Vector2 = _network_activity[source]
-		upload_speed += rates.x
-		download_speed += rates.y
-
-#####CPU#####
-
-
-
-func _create_cpu_timer() -> void:
-	cpu_timer = Timer.new()
-	cpu_timer.wait_time = maxf(cpu_tick_seconds, 0.01)
-	cpu_timer.one_shot = false
-	cpu_timer.timeout.connect(_on_cpu_timer_timeout)
-	add_child(cpu_timer)
+	var rates := _sum_active_reports(_network_activity)
+	upload_speed = rates.x
+	download_speed = rates.y
 
 
 func create_cpu_output() -> void:
@@ -206,9 +225,11 @@ func create_cpu_output() -> void:
 	if cpu_timer.is_stopped():
 		cpu_timer.start()
 
+
 func add_cpu_cores(amount: int) -> void:
 	cpu_cores = clampi(cpu_cores + amount, 1, max_cpu_cores)
-	
+
+
 func _on_cpu_timer_timeout() -> void:
 	if not is_powered:
 		cpu_timer.stop()
@@ -232,53 +253,31 @@ func _refresh_compute_usage() -> void:
 	if not is_powered:
 		_compute_activity.clear()
 		return
-	for source in _compute_activity.keys():
-		if not is_instance_valid(source) or source.is_queued_for_deletion() or not source.is_inside_tree():
-			_compute_activity.erase(source)
-			continue
-		var rates: Vector2 = _compute_activity[source]
-		cpu_output += rates.x
-		gpu_output += rates.y
+	var rates := _sum_active_reports(_compute_activity)
+	cpu_output = rates.x
+	gpu_output = rates.y
 
 
-
-########GPU#########
-	
-func _create_gpu_timer() -> void:
-	gpu_timer = Timer.new()
-	gpu_timer.wait_time = maxf(gpu_tick_seconds, 0.01)
-	gpu_timer.one_shot = false
-	gpu_timer.timeout.connect(_on_gpu_timer_timeout)
-	add_child(gpu_timer)
-	
 func create_gpu_output() -> void:
 	if not is_powered:
 		return
 	if gpu_timer.is_stopped():
 		gpu_timer.start()
 
+
 func add_gpus(amount: int) -> void:
 	gpu_count = clampi(gpu_count + amount, 1, max_gpu_count)
-	
+
+
 func _on_gpu_timer_timeout() -> void:
 	if not is_powered:
 		gpu_timer.stop()
 	_refresh_compute_usage()
 
 
-
-######RAM#####
-
-
-func _create_ram_timer() -> void:
-	ram_timer = Timer.new()
-	ram_timer.wait_time = maxf(ram_tick_seconds, 0.01)
-	ram_timer.one_shot = false
-	ram_timer.timeout.connect(_on_ram_timer_timeout)
-	add_child(ram_timer)
-
 func add_ram_sticks(amount: int) -> void:
 	ram_sticks = clampi(ram_sticks + amount, 1, max_ram_sticks)
+
 
 func create_ram_output() -> void:
 	if not is_powered:
@@ -286,6 +285,7 @@ func create_ram_output() -> void:
 	if ram_timer.is_stopped():
 		ram_timer.start()
 
+## RAM still accumulates output; CPU/GPU/network report current usage instead.
 func _on_ram_timer_timeout() -> void:
 	if not is_powered:
 		ram_timer.stop()
@@ -294,18 +294,14 @@ func _on_ram_timer_timeout() -> void:
 	# RAM level scales the output produced by every installed memory stick.
 	var output_per_stick := ram_output_per_stick * float(ram_lvl) * ram_output_per_level
 	ram_output += output_per_stick * float(ram_sticks) * ram_timer.wait_time
-	print("RAM output: %.1f | RAM level: %d | Sticks: %d" % [ram_output, ram_lvl, ram_sticks])
-	
-	#####POWER#######
 
 
 func add_power(amount: float) -> void:
 	power = clampf(power + amount, 0.0, max_power)
 	if power > 0.0:
 		is_powered = true
-		
-		
-########STORAGE########
+
+
 func add_storage_drives(amount: int) -> void:
 	storage_drives = clampi(storage_drives + amount, 1, max_storage_drives)
 
@@ -326,6 +322,7 @@ func open_program_editor() -> Node:
 	return editor
 
 
+## Store a detached graph snapshot in this Computer. This is not a disk save.
 func save_program(program_name: String, program_data: Dictionary) -> void:
 	var saved_program := {
 		"name": program_name,
@@ -336,3 +333,24 @@ func save_program(program_name: String, program_data: Dictionary) -> void:
 			programs[index] = saved_program
 			return
 	programs.append(saved_program)
+
+
+func _sum_active_reports(reports: Dictionary) -> Vector2:
+	# A freed/closed editor cannot keep contributing phantom activity.
+	var total := Vector2.ZERO
+	for source in reports.keys():
+		if not is_instance_valid(source) or source.is_queued_for_deletion() or not source.is_inside_tree():
+			reports.erase(source)
+			continue
+		total += reports[source] as Vector2
+	return total
+
+
+static func find_for(node: Node) -> Computer:
+	# Shared ancestor lookup works for nested computers and moved UI panels.
+	var ancestor := node.get_parent()
+	while ancestor != null:
+		if ancestor is Computer:
+			return ancestor as Computer
+		ancestor = ancestor.get_parent()
+	return null

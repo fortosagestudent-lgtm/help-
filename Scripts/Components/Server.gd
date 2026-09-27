@@ -1,4 +1,5 @@
 extends "res://Scripts/Components/ProgramComponent.gd"
+## Offers network capacity while the Computer network is active. Capacity alone does not count as traffic.
 
 @export_range(0.0, 100.0, 0.1) var output_multiplier := 1.0
 

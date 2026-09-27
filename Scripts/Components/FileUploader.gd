@@ -1,4 +1,5 @@
 extends "res://Scripts/Components/ProgramComponent.gd"
+## Consumes file and upload rates, accumulating completed test files for this component.
 
 @export_range(0.01, 100000.0, 0.01) var upload_per_file := 1.0
 
@@ -16,8 +17,11 @@ func get_input_ports() -> Array[String]:
 func evaluate(_computer: Computer, inputs: Dictionary, delta: float) -> Dictionary:
 	var file_rate := maxf(float(inputs.get("file", 0.0)), 0.0)
 	var upload_rate := maxf(float(inputs.get("upload", 0.0)), 0.0)
-	var files_this_second := minf(file_rate, upload_rate / maxf(upload_per_file, 0.01))
-	current_upload_rate = files_this_second * maxf(upload_per_file, 0.01)
+	# Upload only as many files as both inputs allow. delta turns the rate into
+	# a cumulative file count, while current_upload_rate remains a live rate.
+	var bandwidth_per_file := maxf(upload_per_file, 0.01)
+	var files_this_second := minf(file_rate, upload_rate / bandwidth_per_file)
+	current_upload_rate = files_this_second * bandwidth_per_file
 	uploaded_files += files_this_second * delta
 	set_status("Uploaded: %.1f test files" % uploaded_files)
 	return {}

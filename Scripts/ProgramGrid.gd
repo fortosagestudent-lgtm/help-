@@ -1,4 +1,5 @@
 extends Control
+## Fixed-size placement grid. Unlike desktop_manager.gd, outside cells are rejected rather than clamped.
 
 var grid := AStarGrid2D.new()
 
@@ -15,22 +16,27 @@ func _ready():
 	grid.cell_size = cell_size
 	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 	grid.update()
-	
+
+
 func mouse_to_grid() -> Vector2i:
+	# Local coordinates keep placement correct when the build area is moved.
 	var mouse := get_local_mouse_position()
 
 	return Vector2i(
 		floor(mouse.x / cell_size.x),
 		floor(mouse.y / cell_size.y)
 	)
-	
+
+
 func grid_to_position(cell: Vector2i) -> Vector2:
 	return Vector2(
 		cell.x * cell_size.x + cell_size.x / 2.0,
 		cell.y * cell_size.y + cell_size.y / 2.0
 	)
-	
+
+
 func place_component(component):
+	# Check bounds before occupancy: AStar only knows cells inside its region.
 	var cell := mouse_to_grid()
 	if not Rect2i(Vector2i.ZERO, grid_size).has_point(cell):
 		print("Outside the build area!")

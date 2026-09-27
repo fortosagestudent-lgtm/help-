@@ -1,4 +1,5 @@
 extends "res://Scripts/Components/ProgramComponent.gd"
+## Offers CPU capacity; actual consumption is reported by processing components, not this source.
 
 @export_range(0.0, 100.0, 0.1) var output_multiplier := 1.0
 

@@ -1,4 +1,5 @@
 extends "res://Scripts/Components/ProgramComponent.gd"
+## Converts download input into a file rate. No CPU or GPU connection is required.
 
 @export_range(0.0, 100.0, 0.1) var processing_multiplier := 1.0
 

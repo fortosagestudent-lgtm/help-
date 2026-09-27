@@ -1,4 +1,5 @@
 extends GraphNode
+## Base class for graph components: declares typed ports, builds their rows, and exposes evaluation/save hooks.
 
 # Port names also identify the values passed between components each tick.
 const PORT_TYPES := {
@@ -51,7 +52,7 @@ func save_state() -> Dictionary:
 
 
 func load_state(_state: Dictionary) -> void:
-	pass
+	pass # Optional hook: stateless components have nothing to restore.
 
 
 func set_status(message: String) -> void:
@@ -60,6 +61,7 @@ func set_status(message: String) -> void:
 
 
 func _build_ports() -> void:
+	# GraphEdit wires use numbered ports; these arrays map indices to data names.
 	var inputs := get_input_ports()
 	var outputs := get_output_ports()
 	for index in range(maxi(inputs.size(), outputs.size())):

@@ -3,6 +3,7 @@ extends CanvasLayer
 
 var taskbar: Control
 var _saved_bounds: Dictionary = {}
+# Entries exist only while a window is maximized, keyed by its instance ID.
 
 
 func _ready() -> void:
@@ -17,6 +18,7 @@ func _on_window_added(window: Node) -> void:
 
 
 func _on_window_removed(window: Node) -> void:
+	# Closing a window removes both its restore bounds and its taskbar button.
 	_saved_bounds.erase(window.get_instance_id())
 	if taskbar != null:
 		taskbar.remove_window_tab(window)

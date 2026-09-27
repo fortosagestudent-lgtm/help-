@@ -50,6 +50,7 @@ func _on_resize_handle_gui_input(event: InputEvent) -> void:
 
 
 func _begin_drag(mode: int, mouse_position: Vector2) -> void:
+	# Measure the entire drag from one starting point, avoiding accumulated drift.
 	drag_mode = mode
 	drag_start_mouse = mouse_position
 	drag_start_position = panel.position

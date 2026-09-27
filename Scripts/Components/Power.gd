@@ -1,4 +1,5 @@
 extends "res://Scripts/Components/ProgramComponent.gd"
+## Offers the Computer power value to downstream nodes without spending it.
 
 @export_range(0.0, 100.0, 0.1) var output_multiplier := 1.0
 

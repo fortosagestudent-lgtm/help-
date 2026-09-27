@@ -1,4 +1,5 @@
 extends "res://Scripts/Components/ProgramComponent.gd"
+## Offers GPU capacity; unused output must leave the Computer usage meter idle.
 
 @export_range(0.0, 100.0, 0.1) var output_multiplier := 1.0
 

@@ -1,4 +1,5 @@
 extends "res://Scripts/Components/ProgramComponent.gd"
+## Splits network capacity into download/upload shares. Power is an availability check, not a recurring charge.
 
 @export_range(0.0, 1.0, 0.01) var download_share := 0.5
 @export_range(0.0, 100000.0, 0.1) var required_power := 1.0

@@ -1,4 +1,6 @@
 extends Node2D
+## Owns one editable/running graph. Computer owns the hardware values and saved
+## graph dictionaries; components supply typed inputs/outputs for each tick.
 
 @onready var panel: PanelContainer = $EditorUI/PanelContainer
 @onready var resize_handle: Button = $EditorUI/ResizeHandle
@@ -25,6 +27,8 @@ var program_data: Dictionary = {}
 var program_name := "Program 1"
 var program_timer: Timer
 var next_component_id := 1
+
+
 func _ready() -> void:
 	_center_editor()
 	panel.resized.connect(_sync_resize_handle)
@@ -61,6 +65,7 @@ func _fit_window() -> void:
 
 
 func set_computer(target: Computer) -> void:
+	# The opening Computer injects itself; never assume it is the main scene.
 	computer = target
 	var title := get_node_or_null("EditorUI/PanelContainer/MarginContainer/MainLayout/Header/Title")
 	if title != null:
@@ -95,6 +100,7 @@ func _create_component(kind: String, component_name: String, graph_position: Vec
 
 
 func _on_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
+	# Each input accepts one wire. Output ports can feed multiple consumers.
 	if from_node == to_node:
 		return
 	for connection in graph.get_connection_list():
@@ -124,13 +130,16 @@ func start_program() -> void:
 
 func stop_program() -> void:
 	program_timer.stop()
-	if is_instance_valid(computer):
-		computer.clear_network_activity(self)
-		computer.clear_compute_activity(self)
+	_clear_activity_reports()
 	status_hint.text = "Stopped."
 
 
 func _exit_tree() -> void:
+	_clear_activity_reports()
+
+
+func _clear_activity_reports() -> void:
+	# Both Stop and Close must remove this program's contribution to the summary.
 	if is_instance_valid(computer):
 		computer.clear_network_activity(self)
 		computer.clear_compute_activity(self)
@@ -148,6 +157,8 @@ func clear_graph() -> void:
 
 
 func _on_program_tick() -> void:
+	# First evaluate the graph, then report actual consumed resources to Computer.
+	# Unused Server/CPU/GPU capacity must not appear as active usage.
 	if not is_instance_valid(computer) or not computer.is_powered:
 		stop_program()
 		return
@@ -175,6 +186,8 @@ func _on_program_tick() -> void:
 
 
 func _evaluate_component(component: ProgramComponent, cache: Dictionary, visiting: Dictionary) -> Dictionary:
+	# Evaluate dependencies before their consumers. cache prevents a shared
+	# upstream node from running twice; visiting detects recursive wire loops.
 	var component_name := str(component.name)
 	if cache.has(component_name):
 		return cache[component_name]
@@ -209,6 +222,7 @@ func _evaluate_component(component: ProgramComponent, cache: Dictionary, visitin
 
 
 func _capture_program_data() -> Dictionary:
+	# Store plain data rather than live nodes so editing does not mutate a save.
 	var nodes: Array[Dictionary] = []
 	for child in graph.get_children():
 		if child is ProgramComponent:

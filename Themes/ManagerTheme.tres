@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://c0u3rffg3t7dr" path="res://Assets/Textures/UI/2X/ButtonLight_Fullscreen_Pressed.png" id="5_Fullscreen_Pressed"]
 [ext_resource type="Texture2D" uid="uid://digfpxpbxcnhm" path="res://Assets/Textures/UI/2X/ButtonLight_Exit_Idle.png" id="6_Exit_Idle"]
 [ext_resource type="Texture2D" uid="uid://t74o4ml4dsdm" path="res://Assets/Textures/UI/2X/ButtonLight_Exit_Pressed.png" id="7_Exit_Pressed"]
+[ext_resource type="FontFile" uid="uid://djv2vutx2s8ke" path="res://Assets/Fonts/drippy-space/DrippySpace-Regular.ttf" id="8_i1ntg"]
+[ext_resource type="StyleBox" uid="uid://tcrkb50nxr42" path="res://Tab_Hover.tres" id="9_bdfhe"]
+[ext_resource type="StyleBox" uid="uid://uf5p51xs1kva" path="res://Tab_Selected.tres" id="10_grg28"]
+[ext_resource type="StyleBox" uid="uid://dwmn2csx7opuo" path="res://Tab_Unselected.tres" id="11_dj4vb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_manager_button_hover"]
 bg_color = Color(0.22, 0.3, 0.46, 1)
@@ -99,3 +103,7 @@ ManagerMinButton/styles/normal = SubResource("StyleBox_Minimize_Idle")
 ManagerMinButton/styles/pressed = SubResource("StyleBox_Minimize_Pressed")
 ManagerPanel/base_type = &"PanelContainer"
 ManagerPanel/styles/panel = SubResource("StyleBoxFlat_manager_panel")
+TabContainer/fonts/font = ExtResource("8_i1ntg")
+TabContainer/styles/tab_hovered = ExtResource("9_bdfhe")
+TabContainer/styles/tab_selected = ExtResource("10_grg28")
+TabContainer/styles/tab_unselected = ExtResource("11_dj4vb")
